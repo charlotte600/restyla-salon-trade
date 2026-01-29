@@ -6,6 +6,8 @@ const PRODUCTS = [
 ];
 
 export default function SalonOrderForm() {
+  const [salonName, setSalonName] = useState('');
+  const [contactName, setContactName] = useState('');
   const [email, setEmail] = useState('');
   const [selectedProducts, setSelectedProducts] = useState({});
   const [loading, setLoading] = useState(false);
@@ -45,6 +47,8 @@ export default function SalonOrderForm() {
       if (response.ok) {
         setMessageType('success');
         setMessage('✓ Success! Check your email for the checkout link with your 50% discount applied.');
+        setSalonName('');
+        setContactName('');
         setEmail('');
         setSelectedProducts({});
       } else {
@@ -65,8 +69,9 @@ export default function SalonOrderForm() {
   return (
     <div style={styles.container}>
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
         * {
-          font-family: 'Harmonia Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          font-family: 'Montserrat', sans-serif;
         }
       `}</style>
 
@@ -76,6 +81,30 @@ export default function SalonOrderForm() {
       </div>
 
       <form onSubmit={handleSubmit} style={styles.form}>
+        <div style={styles.formGroup}>
+          <label style={styles.label}>Salon Name</label>
+          <input
+            type="text"
+            value={salonName}
+            onChange={(e) => setSalonName(e.target.value)}
+            placeholder="Your salon name"
+            required
+            style={styles.input}
+          />
+        </div>
+
+        <div style={styles.formGroup}>
+          <label style={styles.label}>Contact Name</label>
+          <input
+            type="text"
+            value={contactName}
+            onChange={(e) => setContactName(e.target.value)}
+            placeholder="Your name"
+            required
+            style={styles.input}
+          />
+        </div>
+
         <div style={styles.formGroup}>
           <label style={styles.label}>Email Address</label>
           <input
@@ -160,7 +189,7 @@ const styles = {
     minHeight: '100vh',
     backgroundColor: '#ffffff',
     padding: '3rem 1.5rem',
-    fontFamily: "'Harmonia Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    fontFamily: "'Montserrat', sans-serif",
   },
   header: {
     maxWidth: '500px',
@@ -171,7 +200,7 @@ const styles = {
   },
   title: {
     fontSize: '2rem',
-    fontWeight: '600',
+    fontWeight: '700',
     color: '#000',
     margin: '0 0 0.5rem 0',
   },
@@ -179,6 +208,7 @@ const styles = {
     fontSize: '1rem',
     color: '#6a6a6a',
     margin: '0',
+    fontWeight: '500',
   },
   form: {
     maxWidth: '500px',
@@ -199,7 +229,7 @@ const styles = {
     padding: '0.75rem 1rem',
     fontSize: '1rem',
     border: '2px solid #ddd',
-    borderRadius: '0.25rem',
+    borderRadius: '1rem',
     boxSizing: 'border-box',
     fontFamily: 'inherit',
     transition: 'border-color 0.2s',
@@ -211,7 +241,7 @@ const styles = {
     padding: '1rem',
     backgroundColor: '#f9f9f9',
     marginBottom: '0.75rem',
-    borderRadius: '0.25rem',
+    borderRadius: '1rem',
   },
   productInfo: {
     flex: 1,
@@ -219,7 +249,7 @@ const styles = {
   productName: {
     display: 'block',
     fontSize: '0.95rem',
-    fontWeight: '500',
+    fontWeight: '600',
     color: '#000',
   },
   quantityControl: {
@@ -232,24 +262,25 @@ const styles = {
     height: '32px',
     border: '1px solid #ddd',
     backgroundColor: '#fff',
-    borderRadius: '0.25rem',
+    borderRadius: '0.75rem',
     cursor: 'pointer',
     fontSize: '1rem',
     fontWeight: '600',
+    fontFamily: 'inherit',
   },
   qtyInput: {
     width: '50px',
     height: '32px',
     textAlign: 'center',
     border: '1px solid #ddd',
-    borderRadius: '0.25rem',
+    borderRadius: '0.75rem',
     fontSize: '0.95rem',
     fontFamily: 'inherit',
   },
   message: {
     padding: '1rem',
     marginBottom: '1.5rem',
-    borderRadius: '0.25rem',
+    borderRadius: '1rem',
     border: '1px solid',
     fontSize: '0.95rem',
   },
@@ -261,9 +292,10 @@ const styles = {
     color: '#fff',
     backgroundColor: '#ecc9cc',
     border: 'none',
-    borderRadius: '0.25rem',
+    borderRadius: '1rem',
     cursor: 'pointer',
     transition: 'background-color 0.2s',
+    fontFamily: 'inherit',
   },
   disclaimer: {
     maxWidth: '500px',
@@ -271,5 +303,6 @@ const styles = {
     fontSize: '0.85rem',
     color: '#6a6a6a',
     textAlign: 'center',
+    fontWeight: '500',
   },
 };
