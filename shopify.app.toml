@@ -1,0 +1,5 @@
+# This is the app configuration
+scopes = "write_draft_orders,read_customers"
+
+[build]
+  include_config_on_deploy = true
