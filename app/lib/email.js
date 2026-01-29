@@ -1,29 +1,26 @@
 import axios from 'axios';
 
 /**
- * Send email using a simple email service (e.g., SendGrid, Mailgun, or custom)
- * For now, we'll use a placeholder that logs to console
- * In production, replace with actual email service
+ * Send email using Brevo email service
  */
 export async function sendEmail({ to, subject, html }) {
   try {
-    // Placeholder: In production, integrate with SendGrid, Mailgun, or AWS SES
-    console.log(`📧 Email sent to ${to}`);
-    console.log(`   Subject: ${subject}`);
-    
-    // Example: SendGrid integration
-    // await axios.post('https://api.sendgrid.com/v3/mail/send', {
-    //   personalizations: [{ to: [{ email: to }] }],
-    //   from: { email: 'noreply@restyla.com' },
-    //   subject,
-    //   content: [{ type: 'text/html', value: html }]
-    // }, {
-    //   headers: { 'Authorization': `Bearer ${process.env.SENDGRID_API_KEY}` }
-    // });
+    const response = await axios.post('https://api.brevo.com/v3/smtp/email', {
+      sender: { name: 'Restyla Salon Trade', email: 'noreply@restyla.com' },
+      to: [{ email: to }],
+      subject,
+      htmlContent: html
+    }, {
+      headers: {
+        'api-key': process.env.BREVO_API_KEY,
+        'Content-Type': 'application/json'
+      }
+    });
 
-    return { success: true };
+    console.log(`✅ Email sent to ${to}`);
+    return { success: true, messageId: response.data.messageId };
   } catch (error) {
-    console.error('Email send failed:', error.message);
+    console.error('❌ Email send failed:', error.response?.data || error.message);
     throw error;
   }
 }
