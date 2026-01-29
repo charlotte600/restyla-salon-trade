@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 /**
- * Create a Shopify Draft Order using Admin API
+ * Create a Shopify Draft Order using Admin API with 50% salon discount
  */
 export async function createDraftOrder({
   email,
@@ -36,6 +36,10 @@ export async function createDraftOrder({
     input: {
       lineItems,
       email,
+      appliedDiscount: {
+        description: 'Salon Trade 50% Discount',
+        percentageValue: 50.0
+      },
       customAttributes: [
         {
           key: 'order_source',
